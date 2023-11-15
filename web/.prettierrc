@@ -9,7 +9,6 @@
     "svelteBracketNewLine": true,
     "useTabs": false,
     "tabWidth": 4,
-    "avoid": "always",
     "plugins": ["prettier-plugin-svelte"],
     "pluginSearchDirs": false
 }

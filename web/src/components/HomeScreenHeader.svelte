@@ -6,7 +6,18 @@
 
     let headerElement: HTMLElement;
 
-    let transitionConfig: { in: FlyParams, out: FlyParams };
+    let transitionConfig: { in: FlyParams; out: FlyParams } = {
+        in: {
+            duration: 500,
+            //@ts-ignore
+            x: 0,
+        },
+        out: {
+            duration: 500,
+            //@ts-ignore
+            x: 0,
+        },
+    };;
 
     const handleSlide = (e: MouseEvent) => {
         if (e.target !== e.currentTarget) return;
@@ -16,42 +27,49 @@
         let mouseUpHandler = () => {
             window.removeEventListener("mouseup", mouseUpHandler);
             window.removeEventListener("mousemove", mouseMoveHandler);
-        }
+        };
         mouseMoveHandler = (e: MouseEvent) => {
-            const hasMovedEnough = Math.abs(start - e.clientX) >= (getVh() * 16);
+            const hasMovedEnough = Math.abs(start - e.clientX) >= getVh() * 16;
             if (hasMovedEnough) {
                 const direction = start > e.clientX;
                 window.removeEventListener("mouseup", mouseUpHandler);
                 window.removeEventListener("mousemove", mouseMoveHandler);
-                transitionConfig.in.x = direction ? headerElement.getBoundingClientRect().width : -headerElement.getBoundingClientRect().width;
-                transitionConfig.out.x = direction ? getVh() * -headerElement.getBoundingClientRect().width : getVh() * headerElement.getBoundingClientRect().width;
+                transitionConfig.in.x = direction
+                    ? headerElement.getBoundingClientRect().width
+                    : -headerElement.getBoundingClientRect().width;
+                transitionConfig.out.x = direction
+                    ? getVh() * -headerElement.getBoundingClientRect().width
+                    : getVh() * headerElement.getBoundingClientRect().width;
                 changePage(direction);
             }
-        }
+        };
         window.addEventListener("mouseup", mouseUpHandler);
         window.addEventListener("mousemove", mouseMoveHandler);
-    }
+    };
 
-    onMount(() => transitionConfig = {
-        in: {
-            duration: 500,
-            //@ts-ignore
-            x: -headerElement.getBoundingClientRect().width
-        },
-        out: {
-            duration: 500,
-            //@ts-ignore
-            x: headerElement.getBoundingClientRect().width
-        }
-    });
+    onMount(
+        () =>
+            (transitionConfig = {
+                in: {
+                    duration: 500,
+                    //@ts-ignore
+                    x: -headerElement.getBoundingClientRect().width,
+                },
+                out: {
+                    duration: 500,
+                    //@ts-ignore
+                    x: headerElement.getBoundingClientRect().width,
+                },
+            })
+    );
 </script>
 
-<header bind:this={headerElement}>
+<header bind:this="{headerElement}">
     {#if $apps.length > 1}
-    <!-- I'm terribly sorry for this -->
+        <!-- I'm terribly sorry for this -->
         {#each Array(1) as _ ($currentAppPage)}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div on:mousedown="{handleSlide}" out:fly={transitionConfig.out} in:fly={transitionConfig.in}>
+            <div on:mousedown="{handleSlide}" out:fly="{transitionConfig.out}" in:fly="{transitionConfig.in}">
                 {#each getAppsForPage($currentAppPage) as app (app.label)}
                     <button>
                         <img src="{app.icon}" alt="{app.label}" />

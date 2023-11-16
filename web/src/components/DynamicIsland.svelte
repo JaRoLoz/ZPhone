@@ -1,7 +1,7 @@
 <script lang="ts">
     //@ts-ignore
     import { fade } from "svelte/transition";
-    import { islandState, IslandType } from "../utils/DynamicIsland";
+    import { islandState, IslandType } from "../store/DynamicIsland";
     const getIslandDimensions = (state: IslandType): string => {
         switch (state) {
             case IslandType.None:

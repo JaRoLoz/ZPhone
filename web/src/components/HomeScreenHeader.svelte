@@ -9,15 +9,15 @@
     let transitionConfig: { in: FlyParams; out: FlyParams } = {
         in: {
             duration: 500,
-            //@ts-ignore
-            x: 0,
+            opacity: 1,
+            x: 0
         },
         out: {
             duration: 500,
-            //@ts-ignore
-            x: 0,
-        },
-    };;
+            opacity: 1,
+            x: 0
+        }
+    };
 
     const handleSlide = (e: MouseEvent) => {
         if (e.target !== e.currentTarget) return;
@@ -47,26 +47,15 @@
         window.addEventListener("mousemove", mouseMoveHandler);
     };
 
-    onMount(
-        () =>
-            (transitionConfig = {
-                in: {
-                    duration: 500,
-                    //@ts-ignore
-                    x: -headerElement.getBoundingClientRect().width,
-                },
-                out: {
-                    duration: 500,
-                    //@ts-ignore
-                    x: headerElement.getBoundingClientRect().width,
-                },
-            })
-    );
+    onMount(() => {
+        transitionConfig.in.x = -headerElement.getBoundingClientRect().width;
+        transitionConfig.out.x = headerElement.getBoundingClientRect().width;
+    });
 </script>
 
 <header bind:this="{headerElement}">
     {#if $apps.length > 1}
-        <!-- I'm terribly sorry for this -->
+        <!-- I'm terribly sorry for this, but it works, sooo... -->
         {#each Array(1) as _ ($currentAppPage)}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div on:mousedown="{handleSlide}" out:fly="{transitionConfig.out}" in:fly="{transitionConfig.in}">

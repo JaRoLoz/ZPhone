@@ -11,8 +11,8 @@
     debugData([
         {
             action: "setVisible",
-            data: true,
-        },
+            data: true
+        }
     ]);
     const getNextIslandState = () => {
         switch (get(islandState)) {
@@ -30,7 +30,7 @@
 
 <PhoneVisibilityProvider>
     {#if isEnvBrowser()}
-        <div id="night-mode" />
+        <div id="night-mode"></div>
     {/if}
     <div id="phone-frame">
         <Header />

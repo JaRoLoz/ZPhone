@@ -20,8 +20,8 @@ export const debugData = <P>(events: DebugEvent<P>[], timer = 1000): void => {
                     new MessageEvent("message", {
                         data: {
                             action: event.action,
-                            data: event.data,
-                        },
+                            data: event.data
+                        }
                     })
                 );
             }, timer);

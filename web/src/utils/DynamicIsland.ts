@@ -4,7 +4,7 @@ export enum IslandType {
     None,
     Utility,
     Expanded,
-    Player,
+    Player
 }
 
 export const islandState = writable<IslandType>(IslandType.None);

@@ -6,7 +6,7 @@
         "fa-duotone fa-signal-bars-weak",
         "fa-duotone fa-signal-bars-fair",
         "fa-duotone fa-signal-bars-good",
-        "fa-duotone fa-signal-bars",
+        "fa-duotone fa-signal-bars"
     ];
 </script>
 

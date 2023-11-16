@@ -8,11 +8,7 @@
 <main>
     {#each Array(pages).fill(0) as _, i}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div 
-            style="{i === currentPage 
-                ? 'background-color: white; cursor: default;' 
-                : ''}"
-        />
+        <div style="{i === currentPage ? 'background-color: white; cursor: default;' : ''}"></div>
         <!-- <div 
             on:click="{() => currentAppPage.set(i)}" 
             style="{i === currentPage 
@@ -40,6 +36,6 @@
         border-radius: 999999999px;
         border: 0.1vh solid white;
         /* cursor: pointer; */
-        transition: .4s;
+        transition: 0.4s;
     }
 </style>

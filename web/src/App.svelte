@@ -3,11 +3,13 @@
     import Header from "./components/Header.svelte";
     import Footer from "./components/Footer.svelte";
     import PhoneVisibilityProvider from "./providers/PhoneVisibilityProvider.svelte";
-    import { islandState, IslandType } from "./utils/DynamicIsland";
+    import { islandState, IslandType } from "./store/DynamicIsland";
     import { debugData } from "./utils/debugData";
     import { isEnvBrowser } from "./utils/misc";
     import { get } from "svelte/store";
     import Frame from "./components/Frame.svelte";
+    import ControlCenter from "./components/ControlCenter.svelte";
+    import { showControlCenter } from "./store/PhoneState";
     debugData([
         {
             action: "setVisible",
@@ -37,6 +39,9 @@
         <Frame />
         <!-- <Footer on:slide="{() => islandState.set(getNextIslandState())}" /> -->
         <Footer on:slide="{() => push('/code_screen')}" />
+        {#if $showControlCenter}
+            <ControlCenter />
+        {/if}
     </div>
 </PhoneVisibilityProvider>
 

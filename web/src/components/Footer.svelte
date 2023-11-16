@@ -48,6 +48,6 @@
         margin-bottom: 0.7vh;
         border-radius: 99999999px;
         background-color: white;
-        z-index: 2;
+        z-index: 6;
     }
 </style>

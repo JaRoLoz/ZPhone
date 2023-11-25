@@ -24,7 +24,9 @@
             clickFollowingInterval = setInterval(() => {
                 let bottom = footerElement.getBoundingClientRect().bottom;
                 let position = innerHeight - mouseYPosition;
-                barPosition = `margin-bottom: ${position / 1.5 < innerHeight * 0.04 ? position / 1.5 : innerHeight * 0.04}px;`;
+                barPosition = `margin-bottom: ${
+                    position / 1.5 < innerHeight * 0.04 ? position / 1.5 : innerHeight * 0.04
+                }px;`;
                 if (!isMouseBeingHeldDown) {
                     clearInterval(clickFollowingInterval);
                     barPosition = "";
@@ -36,7 +38,7 @@
     });
 </script>
 
-<svelte:window bind:innerHeight="{innerHeight}" />
+<svelte:window bind:innerHeight />
 
 <footer style="{barPosition}" bind:this="{footerElement}"></footer>
 

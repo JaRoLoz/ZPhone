@@ -35,7 +35,12 @@
         <HeaderClock time="{$currentTime}" />
         <div on:mousedown="{handleDrag}" style="{!$showControlCenter ? 'cursor: grab;' : ''}">
             <CellService signalStrength="{3}" />
-            <img in:fade="{{ duration: 300 }}" out:fade="{{ duration: 300 }}" src="{BatteryIcon}" alt="battery-icon" />
+            <img
+                in:fade="{{ duration: 300 }}"
+                out:fade="{{ duration: 300 }}"
+                src="{BatteryIcon}"
+                alt="battery-icon"
+            />
         </div>
     {/if}
     <DynamicIsland />

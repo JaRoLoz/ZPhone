@@ -5,9 +5,9 @@
 </script>
 
 <span in:fade="{{ duration: 300 }}" out:fade="{{ duration: 300 }}">
-    {getTimeFromTimeStamp(time).hours}:{getTimeFromTimeStamp(time).minutes < 10
-        ? `0${getTimeFromTimeStamp(time).minutes}`
-        : getTimeFromTimeStamp(time).minutes}
+    {getTimeFromTimeStamp(time).hours}:{getTimeFromTimeStamp(time).minutes < 10 ?
+        `0${getTimeFromTimeStamp(time).minutes}`
+    :   getTimeFromTimeStamp(time).minutes}
 </span>
 
 <style>

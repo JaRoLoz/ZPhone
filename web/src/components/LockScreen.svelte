@@ -11,12 +11,15 @@
         {getTimeFromTimeStamp($currentTime).dayOfMonth}th
     </h2>
     <h1>
-        {getTimeFromTimeStamp($currentTime).hours}:{getTimeFromTimeStamp($currentTime).minutes < 10
-            ? `0${getTimeFromTimeStamp($currentTime).minutes}`
-            : getTimeFromTimeStamp($currentTime).minutes}
+        {getTimeFromTimeStamp($currentTime).hours}:{getTimeFromTimeStamp($currentTime).minutes < 10 ?
+            `0${getTimeFromTimeStamp($currentTime).minutes}`
+        :   getTimeFromTimeStamp($currentTime).minutes}
     </h1>
     <footer>
-        <LockScreenButton on:click="{(e) => console.log('flashlight', e.detail)}" icon="fa-solid fa-flashlight fa-rotate-270" />
+        <LockScreenButton
+            on:click="{(e) => console.log('flashlight', e.detail)}"
+            icon="fa-solid fa-flashlight fa-rotate-270"
+        />
         <span> Swipe up to unlock </span>
         <LockScreenButton on:click="{(e) => console.log('camera', e.detail)}" icon="fa-solid fa-camera" />
     </footer>

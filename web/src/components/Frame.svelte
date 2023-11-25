@@ -5,7 +5,7 @@
 </script>
 
 <main style="{`background-image: url(${$wallpaper});`}">
-    <Router routes="{routes}" />
+    <Router {routes} />
 </main>
 
 <style>

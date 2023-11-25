@@ -35,7 +35,9 @@
         left: 50%;
         transform: translate(-50%, -50%);
         background: black;
-        transition: 1s, border-radius 1s;
+        transition:
+            1s,
+            border-radius 1s;
     }
     .front-camera {
         position: absolute;

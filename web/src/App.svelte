@@ -10,6 +10,9 @@
     import Frame from "./components/Frame.svelte";
     import ControlCenter from "./components/ControlCenter.svelte";
     import { showControlCenter } from "./store/PhoneState";
+    import { handleBottomBar } from "./utils/bottomBarHandler";
+    import { onMount } from "svelte";
+    import { RegisterAppMoveHandler } from "./utils/MoveApps";
     debugData([
         {
             action: "setVisible",
@@ -28,6 +31,9 @@
                 return IslandType.None;
         }
     };
+    onMount(() => {
+        RegisterAppMoveHandler();
+    });
 </script>
 
 <PhoneVisibilityProvider>
@@ -38,7 +44,7 @@
         <Header />
         <Frame />
         <!-- <Footer on:slide="{() => islandState.set(getNextIslandState())}" /> -->
-        <Footer on:slide="{() => push('/code_screen')}" />
+        <Footer on:slide="{handleBottomBar}" />
         {#if $showControlCenter}
             <ControlCenter />
         {/if}

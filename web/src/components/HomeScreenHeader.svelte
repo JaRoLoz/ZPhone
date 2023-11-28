@@ -89,7 +89,7 @@
 <header class="apps-container" bind:this="{headerElement}">
     {#if $apps.length > 1}
         <!-- I'm terribly sorry for this, but it works, sooo... -->
-        {#each Array(1) as _ ($currentAppPage)}
+        {#key $currentAppPage}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div
                 on:mousedown="{handleSlide}"
@@ -100,7 +100,9 @@
                 {#each getAppsForPage($apps, $currentAppPage) as app, i (app.label)}
                     <button
                         animate:flip="{{ duration: 550 }}"
-                        class="{`${app.visible ? 'home-app-icon' : 'fake-app'} ${$isMovingApps ? 'shake' : ''}`}"
+                        class="{`${app.visible ? 'home-app-icon' : 'fake-app'} ${
+                            $isMovingApps ? 'shake' : ''
+                        }`}"
                         on:mousedown="{handleAppMove}"
                         data-app="{JSON.stringify(app)}"
                     >
@@ -115,7 +117,7 @@
                     </button>
                 {/each}
             </div>
-        {/each}
+        {/key}
     {/if}
 </header>
 

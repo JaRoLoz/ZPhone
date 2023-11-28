@@ -17,7 +17,9 @@ let isWaitingAboveApp: Promise<void> | null = null;
 export const RegisterAppMoveHandler = () =>
     movingApp.subscribe(async (current) => {
         if (!current) return;
-        apps.update((currentApps) => currentApps.filter((app) => app.label !== current.label));
+        apps.update((currentApps) =>
+            currentApps.filter((app) => ![current.label, "fake-app"].includes(app.label))
+        );
         const body = document.querySelector("body")!;
         const appDivElement = document.createElement("div");
         appDivElement.style.position = "absolute";
@@ -33,8 +35,9 @@ export const RegisterAppMoveHandler = () =>
         let lastElement: HTMLElement | undefined | null = undefined;
         let lastFakeElement: HTMLElement | undefined | null = undefined;
         const mouseMoveHandler = (e: MouseEvent) => {
-            appDivElement.style.top = `${e.clientY - appDivElement.getBoundingClientRect().height / 2}px`;
-            appDivElement.style.left = `${e.clientX - appDivElement.getBoundingClientRect().width / 2}px`;
+            const appDivElementDimensions = appDivElement.getBoundingClientRect();
+            appDivElement.style.top = `${e.clientY - appDivElementDimensions.height / 2}px`;
+            appDivElement.style.left = `${e.clientX - appDivElementDimensions.width / 2}px`;
             const elements = document.elementsFromPoint(e.clientX, e.clientY) as HTMLElement[];
             const matchingButtonElement = elements.find(
                 (element) =>
@@ -65,9 +68,8 @@ export const RegisterAppMoveHandler = () =>
             );
             if (!aboveAppsContainer && aboveHomeContainer) {
                 const homeContainer = document.querySelector(".home-container")!;
-                const distanceFromMiddle =
-                    (e.clientX - homeContainer.getBoundingClientRect().left) /
-                    homeContainer.getBoundingClientRect().width;
+                const containerDimensions = homeContainer.getBoundingClientRect();
+                const distanceFromMiddle = (e.clientX - containerDimensions.left) / containerDimensions.width;
                 if (distanceFromMiddle < 0.05 || distanceFromMiddle > 0.95) {
                     const isGoingRight = distanceFromMiddle > 0.1;
                     homeScreenPageTransition.update((current) => {
@@ -101,6 +103,7 @@ export const RegisterAppMoveHandler = () =>
                                 page: elementData.page,
                                 position: fakePosition
                             };
+                            console.log(existingFakeElement && currentElement === lastElement);
                             currentApps = [fakeApp, ...currentApps];
                             return currentApps;
                         });
@@ -124,6 +127,7 @@ export const RegisterAppMoveHandler = () =>
                 });
                 return;
             } else {
+                isWaitingAboveApp = null;
                 body.removeChild(appDivElement);
                 isMovingApps.set(false);
                 window.removeEventListener("mousemove", mouseMoveHandler);
@@ -132,15 +136,18 @@ export const RegisterAppMoveHandler = () =>
                 apps.update((currentApps) => currentApps.filter((app) => app.name !== "fake-app"));
                 const movingAppData = get(movingApp)!;
                 apps.update((current) => {
-                    return [...current, {
-                        icon: movingAppData.icon,
-                        name: movingAppData.name,
-                        label: movingAppData.label,
-                        component: movingAppData.component,
-                        visible: true,
-                        page: fakeApp!.page,
-                        position: fakeApp!.position - 1
-                    }];
+                    return [
+                        ...current,
+                        {
+                            icon: movingAppData.icon,
+                            name: movingAppData.name,
+                            label: movingAppData.label,
+                            component: movingAppData.component,
+                            visible: true,
+                            page: fakeApp!.page,
+                            position: fakeApp!.position - 1
+                        }
+                    ];
                 });
                 return;
             }

@@ -43,6 +43,7 @@ export const getPageAmount = (): number => {
 export const changePage = (page: boolean) => {
     const maxPage = getPageAmount() - 1;
     const currentPage = get(currentAppPage);
+    apps.update((currentApps) => currentApps.filter((app) => app.name !== "fake-app"));
     if (page && currentPage == maxPage) return;
     if (!page && currentPage == 0) return;
     currentAppPage.update((value) => value + (page ? 1 : -1));

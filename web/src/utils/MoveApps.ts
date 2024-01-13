@@ -109,8 +109,7 @@ export const RegisterAppMoveHandler = () =>
                             currentApps = [fakeApp, ...currentApps];
                             return currentApps;
                         });
-                    } else
-                        apps.update((currentApps) => currentApps.filter((app) => app.name !== "fake-app"));
+                    } else apps.update((currentApps) => currentApps.filter((app) => app.name !== "fake-app"));
                     lastElement = currentElement;
                     lastFakeElement = currentFakeElement;
                     resolve();
@@ -119,6 +118,34 @@ export const RegisterAppMoveHandler = () =>
             );
         };
         const mouseUpHandler = (e: MouseEvent) => {
+            const elements = document.elementsFromPoint(e.clientX, e.clientY) as HTMLElement[];
+            const matchingFooterElement = elements.find((element) =>
+                element.classList?.contains("home-screen-footer")
+            );
+            if (matchingFooterElement && (getAppsForPage(get(apps), -1).length === 0)) {
+                isWaitingAboveApp = null;
+                body.removeChild(appDivElement);
+                isMovingApps.set(false);
+                window.removeEventListener("mousemove", mouseMoveHandler);
+                window.removeEventListener("mouseup", mouseUpHandler);
+                const movingAppData = get(movingApp)!;
+                apps.update((current) => {
+                    current.filter((app) => app.name !== "fake-app");
+                    return [
+                        ...current,
+                        {
+                            icon: movingAppData.icon,
+                            name: movingAppData.name,
+                            label: movingAppData.label,
+                            component: movingAppData.component,
+                            visible: true,
+                            page: -1,
+                            position: 0
+                        }
+                    ];
+                });
+                return;
+            }
             if (!lastFakeElement) {
                 body.removeChild(appDivElement);
                 window.removeEventListener("mousemove", mouseMoveHandler);

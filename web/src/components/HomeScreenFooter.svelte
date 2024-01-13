@@ -33,7 +33,7 @@
     };
 </script>
 
-<footer>
+<footer class="home-screen-footer">
     {#each getAppsForPage($apps, -1) as app, i (app.label)}
         <button
             animate:flip="{{ duration: 550 }}"
@@ -50,8 +50,9 @@
     footer {
         display: flex;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: center;
         height: 5.2vh;
+        gap: 1vh;
         width: 94%;
         margin-top: auto;
         margin-bottom: 1.6vh;

@@ -19,18 +19,6 @@
             data: true
         }
     ]);
-    const getNextIslandState = () => {
-        switch (get(islandState)) {
-            case IslandType.None:
-                return IslandType.Utility;
-            case IslandType.Utility:
-                return IslandType.Expanded;
-            case IslandType.Expanded:
-                return IslandType.Player;
-            case IslandType.Player:
-                return IslandType.None;
-        }
-    };
     onMount(() => {
         RegisterAppMoveHandler();
     });

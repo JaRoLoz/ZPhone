@@ -14,6 +14,8 @@ import { get } from "svelte/store";
 
 let isWaitingAboveApp: Promise<void> | null = null;
 
+// even I am ashamed of this code, sorry y'all
+
 export const RegisterAppMoveHandler = () =>
     movingApp.subscribe(async (current) => {
         if (!current) return;
@@ -49,11 +51,12 @@ export const RegisterAppMoveHandler = () =>
             const currentElement =
                 matchingButtonElement?.nodeName === "BUTTON" ?
                     matchingButtonElement
-                :   matchingButtonElement?.parentElement;
+                    : matchingButtonElement?.parentElement;
+
             const currentFakeElement =
                 matchingFakeElement?.nodeName === "BUTTON" ?
                     matchingFakeElement
-                :   matchingFakeElement?.parentElement;
+                    : matchingFakeElement?.parentElement;
 
             if (isWaitingAboveApp) return;
             let dockInconCount = getAppsForPage(get(apps), -1).filter(
@@ -103,11 +106,11 @@ export const RegisterAppMoveHandler = () =>
                                 page: elementData.page,
                                 position: fakePosition
                             };
-                            console.log(existingFakeElement && currentElement === lastElement);
                             currentApps = [fakeApp, ...currentApps];
                             return currentApps;
                         });
-                    } else apps.update((currentApps) => currentApps.filter((app) => app.name !== "fake-app"));
+                    } else
+                        apps.update((currentApps) => currentApps.filter((app) => app.name !== "fake-app"));
                     lastElement = currentElement;
                     lastFakeElement = currentFakeElement;
                     resolve();
@@ -136,6 +139,12 @@ export const RegisterAppMoveHandler = () =>
                 apps.update((currentApps) => currentApps.filter((app) => app.name !== "fake-app"));
                 const movingAppData = get(movingApp)!;
                 apps.update((current) => {
+                    current.filter((app) => app.name !== "fake-app");
+                    current.forEach((app) => {
+                        if (app.page === fakeApp!.page && app.position >= fakeApp!.position) {
+                            app.position++;
+                        }
+                    });
                     return [
                         ...current,
                         {
@@ -145,11 +154,10 @@ export const RegisterAppMoveHandler = () =>
                             component: movingAppData.component,
                             visible: true,
                             page: fakeApp!.page,
-                            position: fakeApp!.position - 1
+                            position: fakeApp!.position
                         }
                     ];
                 });
-                return;
             }
         };
         window.addEventListener("mouseup", mouseUpHandler);

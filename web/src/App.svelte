@@ -3,16 +3,15 @@
     import Header from "./components/Header.svelte";
     import Footer from "./components/Footer.svelte";
     import PhoneVisibilityProvider from "./providers/PhoneVisibilityProvider.svelte";
-    import { islandState, IslandType } from "./store/DynamicIsland";
     import { debugData } from "./utils/debugData";
     import { isEnvBrowser } from "./utils/misc";
-    import { get } from "svelte/store";
     import Frame from "./components/Frame.svelte";
     import ControlCenter from "./components/ControlCenter.svelte";
     import { showControlCenter } from "./store/PhoneState";
     import { handleBottomBar } from "./utils/bottomBarHandler";
     import { onMount } from "svelte";
     import { RegisterAppMoveHandler } from "./utils/MoveApps";
+    push("/lock_screen");
     debugData([
         {
             action: "setVisible",

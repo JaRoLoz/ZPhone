@@ -6,7 +6,7 @@ export const wallpaper = writable<string>(
     "https://www.ytechb.com/wp-content/uploads/2023/09/iPhone-15-Pro-Natural-Wallpaper-1.webp"
 );
 export const currentTime = writable<number>(1699116111);
-export const codeLock = writable<string>("4367");
+export const codeLock = writable<string>("1111");
 export const showControlCenter = writable<boolean>(false);
 export const homeScreenPageTransition = writable<{ in: FlyParams; out: FlyParams }>({
     in: {

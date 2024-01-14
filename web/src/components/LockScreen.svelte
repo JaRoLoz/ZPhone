@@ -59,6 +59,7 @@
         color: white;
         text-align: center;
         animation: pulse 2s infinite;
+        font-size: 1.2vh;
     }
     @keyframes pulse {
         0% {

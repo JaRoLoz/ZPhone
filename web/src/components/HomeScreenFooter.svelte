@@ -3,6 +3,7 @@
     import { apps, getAppsForPage, movingApp, isMovingApps } from "../store/PhoneState";
     import { flip } from "svelte/animate";
     import type { IAppManifest } from "../types";
+    import { launchApp } from "../store/AppState";
 
     const handleAppMove = async (e: MouseEvent) => {
         const holdingPromise = new Promise<boolean>((resolve) => {
@@ -18,17 +19,17 @@
         });
 
         const hasMouseBeenHeld = await holdingPromise;
-        if (!hasMouseBeenHeld) {
-            if (get(isMovingApps)) return;
-            // TODO: Implement app launching logic
-            return;
-        }
-        isMovingApps.set(true);
         //@ts-ignore
         const element = (
             (e.target! as HTMLElement).nodeName === "BUTTON" ?
                 e.target
             :   (e.target! as HTMLElement).parentElement) as HTMLButtonElement;
+        if (!hasMouseBeenHeld) {
+            if (get(isMovingApps)) return;
+            launchApp(JSON.parse(element.dataset.app as string) as IAppManifest);
+            return;
+        }
+        isMovingApps.set(true);
         movingApp.set(JSON.parse(element.dataset.app as string) as IAppManifest);
     };
 </script>

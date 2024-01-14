@@ -6,4 +6,6 @@ export interface IAppManifest {
     page: number;
     position: number;
     visible: boolean;
+    deleteable: boolean;
+    progress: number;
 }

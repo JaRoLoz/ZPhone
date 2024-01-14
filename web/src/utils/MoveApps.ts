@@ -104,7 +104,9 @@ export const RegisterAppMoveHandler = () =>
                                 visible: false,
                                 component: randomString(5),
                                 page: elementData.page,
-                                position: fakePosition
+                                position: fakePosition,
+                                deleteable: false,
+                                progress: 101
                             };
                             currentApps = [fakeApp, ...currentApps];
                             return currentApps;
@@ -119,10 +121,10 @@ export const RegisterAppMoveHandler = () =>
         };
         const mouseUpHandler = (e: MouseEvent) => {
             const elements = document.elementsFromPoint(e.clientX, e.clientY) as HTMLElement[];
-            const matchingFooterElement = elements.find((element) =>
-                element.classList?.contains("home-screen-footer")
+            const matchingFooterElement = elements.find(
+                (element) => element.classList?.contains("home-screen-footer")
             );
-            if (matchingFooterElement && (getAppsForPage(get(apps), -1).length === 0)) {
+            if (matchingFooterElement && getAppsForPage(get(apps), -1).length === 0) {
                 isWaitingAboveApp = null;
                 body.removeChild(appDivElement);
                 isMovingApps.set(false);
@@ -140,7 +142,9 @@ export const RegisterAppMoveHandler = () =>
                             component: movingAppData.component,
                             visible: true,
                             page: -1,
-                            position: 0
+                            position: 0,
+                            deleteable: movingAppData.deleteable,
+                            progress: movingAppData.progress
                         }
                     ];
                 });
@@ -181,11 +185,16 @@ export const RegisterAppMoveHandler = () =>
                             component: movingAppData.component,
                             visible: true,
                             page: fakeApp!.page,
-                            position: fakeApp!.position
+                            position: fakeApp!.position,
+                            deleteable: movingAppData.deleteable,
+                            progress: movingAppData.progress
                         }
                     ];
                 });
             }
+            apps.update((currentApps) =>
+                currentApps.filter((app) => app.name !== "fake-app")
+            );
         };
         window.addEventListener("mouseup", mouseUpHandler);
         window.addEventListener("mousemove", mouseMoveHandler);
